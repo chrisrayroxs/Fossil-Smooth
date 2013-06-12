@@ -1,0 +1,29 @@
+{
+	fssc: 'FSSCMensWatchesCasual',
+	countries: [''],
+	viewType: 1,
+	feature: {
+		gridDimensions: '',
+		dataPosition: '',
+		dataSize: '',
+		link: '',
+		img: '',
+		useMap: null,
+		useFeature: true,
+		integratedContent: false,
+		image_map: {
+			map: {
+				map_type: '',
+				data_sku: null,
+				data_tag: null,
+				coords: ''
+			},
+			mapSmall: {
+				map_type: '',
+				data_sku: null,
+				data_tag: null,
+				coords: ''
+			}
+		}
+	}
+}

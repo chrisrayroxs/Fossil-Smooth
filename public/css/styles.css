@@ -1,0 +1,157 @@
+/*   
+ * Lifeline styles
+ * by Christopher Reynolds
+ *   */
+
+body {
+    background-color: #eaf5ff;
+}
+body {
+    background: url("../images/body.png") repeat-x scroll center top #fff;
+    font-family: Verdana,sans-serif;
+    font-size: 100%;
+    margin-top: 7px;
+}
+#wrapper {
+    background-color: #eaf5ff;
+}
+#header {
+    background: url("../images/header.png") repeat-x scroll center bottom #F8F8F8;
+    margin: 0 auto;
+    position: relative;
+}
+a {
+    color: #2C74C9;
+    text-decoration: none;
+}
+.span3 h1{
+	margin:16px 0 0 10px;
+}
+.span5 {
+	margin:20px;
+	background: #C6E6F7;
+	border-radius:0 20px 20px 0;
+	padding:10px;
+}
+.span15 {
+	width:100%;
+}
+svg circle {
+	position: relative;
+}
+table {
+	
+}
+table td, th {
+    border: 1px solid #d0d0d0;
+    height: 30px;
+}
+table td:hover {
+    background:#fff;
+    border-color: #fff;
+}
+table th:hover {
+    background:#f3f3f3;
+    border-color:#fff;
+}
+table {
+	width:80%;
+	margin: 0 auto;
+	border-radius:10px;
+	float:left;
+}
+.tableCell td  {
+	
+}
+table .hover  {
+	background:#ADDDF7;
+}
+.tableCell input  {
+	border:#69C1F0 solid 1px;
+	width:90%;
+}
+table td  {
+	min-width:60px;
+	height:30px;
+}
+#timeLine {
+	width:90%;
+	overflow:hidden;
+}
+#timelineOptions {
+	width:600px;
+	float:left;
+	margin:-40px 0 0 200px;
+}
+#timelineOptions li {
+	padding-left:20px;
+	list-style:none;
+	display:block;
+	float:left;
+}
+input {
+	height:26px;
+	font-size:22px;
+}
+input:hover {
+	background:#fff;
+	border:solid 1px #bfedfe;
+}
+input:active {
+	color:#b5b5b5;
+}
+
+#tabs {
+	background: #C6E6F7;
+}
+#ui-tabs-1 {
+	width:96%;
+	min-height:600px;
+	border-radius:10px;
+	border:solid #eee 2px;
+	margin:10px;
+	padding:5px;
+	background: url(../images/transparentBack.jpg) repeat;
+}
+#ui-tabs-2 {
+	width:96%;
+	min-height:600px;
+	border-radius:10px;
+	border:solid #C6D3F7 2px;
+	margin:10px;
+	padding:5px;
+	background: url(../images/transparentBack.jpg) repeat;
+}
+/* footer */
+#footer_wrapper {
+    background: url("../images/footer_wrapper.png") repeat-x scroll center top #FCFCFC;
+    clear: both;
+    height: 80px;
+}
+#footer a {
+    font-weight: bold;
+}
+#footer_links a {
+    font-size: 1.1em;
+    padding-right: 14px;
+}
+#footer {
+    background: url("../images/footer.png") repeat-x scroll center bottom #F8F8F8;
+    color: #333333;
+    font-size: 0.7em;
+    height: 58px;
+    margin: 0 auto;
+    width: 980px;
+}
+#footer_links {
+    float: left;
+    left: 27px;
+    position: relative;
+    top: 19px;
+}
+#footer_credits {
+    float: right;
+    position: relative;
+    right: 27px;
+    top: 19px;
+}

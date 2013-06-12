@@ -1,0 +1,38 @@
+//JADE//CATEGORY//MODALS//
+
+#modalFSSC
+	#heading New Category Feature
+	#content
+	
+		input#fsscAdd(placeholder='Type FSSC Code You Wish To Add Here', tabindex='1')
+		button.btn#createFSSC(tabindex='2') Create
+
+		#fsscConfirmation
+			label Are you sure you want to create this?
+			button.btn.g#createFSSC_y Yes
+			button.btn.r#createFSSC_n No
+
+		h2 Current Codes:
+		ul.fsscList
+
+#modalConfig
+	#heading Edit Feature
+	#content
+	
+		h1#cat_fssc
+
+		label
+			b Link
+		input#cat_link(type='text', placeholder='Link')<br/>
+		
+		label
+			b Image Path
+		input#cat_img(type='text', placeholder='Image Path')
+
+		form(action="...", method="post", enctype="multipart/form-data")
+			input(type="file", name="displayImage", value="Upload Image")
+
+		
+		button.btn.classB#saveCatConf Save
+		#configUpdate
+			label Saved!
