@@ -86,6 +86,7 @@ define([
 			//module.data.store(1, catFeature);
 
 		},
+		console.log('fag');
 
 		//create an feature content piece and add it to design board
 		createFeature: function() {
