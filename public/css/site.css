@@ -258,6 +258,22 @@ span.greenNotice { color: green }
   font-size: 14px;
   color: #577994;
 }
+.options li {
+  list-style: none;
+  display: list-item;
+  float: left;
+  width: 96%;
+  margin-top: -2px;
+}
+#modalConfig.options #cat_link, #modalConfig.options #cat_img {
+  width: 88%;
+  float: left;
+}
+.icon-camera-retro, .icon-link {
+  font-size: 2em;
+  float:left;
+  margin-top: 16px!important;
+}
 
 #heading {
     width: 660px;
@@ -391,6 +407,8 @@ font-size: 20px;
   color:lightgreen;
   font-size: 14px;
   padding:10px;
+  width: 70px;
+  float: left;
   display: none;
 }
 
