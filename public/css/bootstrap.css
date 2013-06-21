@@ -3133,7 +3133,8 @@ button.close {
 .btn.disabled,
 .btn[disabled] {
   cursor: default;
-  background-color: #e6e6e6;
+  background-color: #B3B3B3;
+  /*background-color: #e6e6e6;*/
   background-image: none;
   opacity: 0.65;
   filter: alpha(opacity=65);
