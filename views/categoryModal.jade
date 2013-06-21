@@ -9,8 +9,8 @@
 
 		#fsscConfirmation
 			label Are you sure you want to create this?
-			button.btn.g#createFSSC_y Yes
-			button.btn.r#createFSSC_n No
+			button.btn.btn-success#createFSSC_y Yes
+			button.btn.btn-danger#createFSSC_n No
 
 		h2 Current Codes:
 		ul.fsscList
@@ -26,12 +26,11 @@
 		input#cat_link(type='text', placeholder='Link')<br/>
 		
 		label
-			b Image Path
+			b Image Reference Path
 		input#cat_img(type='text', placeholder='Image Path')
 
-		form(action="...", method="post", enctype="multipart/form-data")
-			input(type="file", name="displayImage", value="Upload Image")
-
+		// form(action="...", method="post", enctype="multipart/form-data")
+		// 	input(type="file", name="displayImage", value="Upload Image")
 		
 		button.btn.classB#saveCatConf Save
 		#configUpdate
