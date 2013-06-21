@@ -2,21 +2,6 @@
 //CONFIG OBJECT FOR CATEGORIES
 ///////////////////////////////
 
-// catFeature.type = 'feature',
-// catFeature.index = 0,
-// catFeature.useFeature = false,
-// catFeature.viewType = 0,
-// catFeature.countries = ['US'],
-// catFeature.feature.integratedContent = false,
-// //feature markup attributes
-// catFeature.fssc = 'local';
-// catFeature.feature.gridDimensions = 'grid1x1';
-// catFeature.feature.dataPosition = '0_0';
-// catFeature.feature.dataSize = '1_1';
-// catFeature.feature.link = '#linkForFeature';
-// catFeature.feature.img = '/imgs/placeholder.gif';
-// catFeature.feature.useMap = 'grid2x3';
-
 define([], function() {
 	var module = {
 		categories: [{
