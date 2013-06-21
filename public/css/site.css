@@ -237,7 +237,7 @@ span.greenNotice { color: green }
 }
 #modalConfig {
     width: 660px;
-    height: 600px;
+    height: 700px;
     padding: 8px;
     background: rgba(0,0,0,.3);
     -webkit-border-radius: 8px;
@@ -284,7 +284,7 @@ span.greenNotice { color: green }
 }
 #content {
     width: 620px;
-    height:513px;
+    height:613px;
     padding: 20px;
     background: #fcfcfc;
     -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,.25);
@@ -368,6 +368,8 @@ background: #E4EFF5;
 .fsscList #remove {
   font-size: 22px;
   margin-right: 2px;
+padding: 4px;
+padding-right: 12px;
 }
 .fsscList #remove:hover {
   color:red;
@@ -397,8 +399,26 @@ font-size: 20px;
   height:55px;
   display:none;
 }
+#contries {
+  padding: 4px;
+  width: 94px;
+  margin-left: -3px;
+  height: 100px;
+  margin-top: 10px;
+}
+#contries span{
+  float: left;
+  width: 20px;
+  margin: 1px;
+  padding: 4px 4px;
+  cursor: pointer;
+}
+#dp1, #dp2 {
+  width: 76px;
+  font-size: 12px;
+}
 .helpBox {
-  opacity: 0.2;
+  opacity: 0.5;
   position: absolute;
   top: 4px;
   left: 30%;
@@ -410,9 +430,6 @@ font-size: 20px;
   text-align: center;
 }
 
-.r {background-color:red!important;}
-.g {background-color:lightgreen!important;}
-
 /* threshold 1 category grid styles             */
 .grid1x1 {
     width: 180px;
@@ -420,19 +437,19 @@ font-size: 20px;
 }
 .grid1x2 {
     width: 180px;
-    height: 180px;
+    height: 360px;
 }
 .grid1x3 {
     width: 180px;
-    height: 180px;
+    height: 540px;
 }
 .grid1x4 {
     width: 180px;
-    height: 180px;
+    height: 720px;
 }
 .grid2x1 {
     width: 360px;
-    height: 360px;
+    height: 180px;
 }
 .grid2x2 {
     width: 360px;
@@ -440,19 +457,19 @@ font-size: 20px;
 }
 .grid2x3 {
     width: 360px;
-    height: 360px;
+    height: 540px;
 }
 .grid2x4 {
     width: 360px;
-    height: 360px;
+    height: 720px;
 }
 .grid3x1 {
     width: 540px;
-    height: 540px;
+    height: 180px;
 }
 .grid3x2 {
     width: 540px;
-    height: 540px;
+    height: 360px;
 }
 .grid3x3 {
     width: 540px;
@@ -460,19 +477,19 @@ font-size: 20px;
 }
 .grid3x4 {
     width: 540px;
-    height: 540px;
+    height: 720px;
 }
 .grid4x1 {
     width: 720px;
-    height: 720px;
+    height: 180px;
 }
 .grid4x2 {
     width: 720px;
-    height: 720px;
+    height: 360px;
 }
 .grid4x3 {
     width: 720px;
-    height: 720px;
+    height: 540px;
 }
 .grid4x4 {
     width: 720px;
