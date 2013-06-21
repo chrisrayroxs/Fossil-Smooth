@@ -1,6 +1,6 @@
 //JADE//CATEGORY//MODALS//
 
-#modalFSSC
+#modalFSSC.fssc
 	#heading New Category Feature
 	#content
 	
@@ -15,20 +15,20 @@
 		h2 Current Codes:
 		ul.fsscList
 
-#modalConfig
+#modalConfig.options
 	#heading Edit Feature
 	#content
 	
 		h1#cat_fssc
 
-		label
-			b Link
-		input#cat_link(type='text', placeholder='Link')<br/>
+		ul
+			li
+				i.icon-link
+				input#cat_link(type='text', placeholder='Link')<br/>
+			li
+				i.icon-camera-retro
+				input#cat_img(type='text', placeholder='Image Path')
 		
-		label
-			b Image Reference Path
-		input#cat_img(type='text', placeholder='Image Path')
-
 		// form(action="...", method="post", enctype="multipart/form-data")
 		// 	input(type="file", name="displayImage", value="Upload Image")
 		
