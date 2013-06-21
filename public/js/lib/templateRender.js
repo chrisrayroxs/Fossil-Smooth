@@ -7,8 +7,9 @@ define([
 	'hogan',
 	'configs/test_config.js',
 	'text!category_template.tpl',
+	'bootstrap-datepicker',
 	'jquery.reveal',
-	'jquery-ui'], function($, hogan, config, template) {
+	'jquery-ui'], function($, hogan, config, template, datepicker) {
 
 	var module = {
 
@@ -16,6 +17,7 @@ define([
 		template: template,
 		currentElement: {},
 		currentElementIndex: 0,
+		currentFSSC: [],
 		elementIndex: 0,
 		saveIndex: 0,
 		dataObj: config,
@@ -64,20 +66,21 @@ define([
 		},
 
 		//fetch data and render category feature to design board
-		renderCatFeature: function() {
+		renderCatFeature: function(i) {
 
 			//render selected config item with template
 			// var buffer = Hogan.compile(module.template).render({
 			// categories: module.config.categories[i]
 			// });
-
+	
 			var catFeature = module.config.categories[i];
 
-			catFeature.markup = '<div id="categoryFeatureSpot" class="catFeature ' + catFeature.feature.gridDimensions + ' ' + catFeature.fssc + '" data-position="' + catFeature.feature.dataPosition +
-				'" data-size="' + catFeature.feature.dataSize + '" data-index="' + i + '"><a data-href="' + catFeature.feature.link + '"><img src="' + catFeature.feature.img + '" usemap="' + catFeature.feature.useMap + '" /></a></div>';
+			var markup = '<div id="categoryFeatureSpot" class="catFeature ' + catFeature.feature.gridDimensions + ' ' + catFeature.fssc + '" data-position="' + catFeature.feature.dataPosition +
+				'" width="' + module.returnDemensions(catFeature.feature.dataSize, 'width') + '" height="' + module.returnDemensions(catFeature.feature.dataSize, 'height') + '" data-index="' + i 
+				+ '"><a data-href="' + catFeature.feature.link + '"><img src="' + catFeature.feature.img + '" usemap="' + catFeature.feature.useMap + '" /></a></div>';
 
 			//append to design board
-			$("#board").append(catFeature.markup);
+			$("#board").append(markup);
 
 			//apply draggable and moveable to new object
 			module.animate(catFeature, '.catFeature', 180);
@@ -86,32 +89,48 @@ define([
 			//module.data.store(1, catFeature);
 
 		},
-		console.log('fag');
 
 		//create an feature content piece and add it to design board
 		createFeature: function() {
 
-			//create default attributes for new feature
-			var catFeature = module.new.feature();
+			//check if there's already a feature spot on the designboard
+			//config file only supports one feature
+			if(!$('#categoryFeatureSpot')[0]) {
 
-			catFeature.markup = '<div id="categoryFeatureSpot" class="catFeature ' + catFeature.categories.feature.gridDimensions + ' ' + catFeature.categories.fssc + '" data-position="' + catFeature.categories.feature.dataPosition + '" data-size="' + catFeature.categories.feature.dataSize +
-				'" data-index="' + module.elementIndex + '"><a data-href="' + catFeature.categories.feature.link + '"><img src="' + catFeature.categories.feature.img +
-				'" usemap="' + catFeature.categories.feature.useMap + '" /></a></div>';
+				//create default attributes for new feature
 
-			//append to design board
-			$("#board").append(catFeature.markup);
-			$('.catFeature').show('fast');
+				var config = {};
+				config.fssc = 'newFeature';
 
-			//apply draggable and moveable to new object
-			module.animate(catFeature, '.catFeature', 180);
+				var catFeature = module.new.feature(config);
 
-			//store reference
-			module.data.store(1, catFeature);
+				console.log(catFeature);
 
-			//save designboard after addition
-			module.undo.saveDesignBoard();
+				var markup = '<div id="categoryFeatureSpot" class="catFeature ' + catFeature.feature.gridDimensions + ' ' + catFeature.fssc + '" data-position="' + catFeature.feature.dataPosition + '" data-size="' + catFeature.feature.dataSize +
+					'" data-index="' + module.elementIndex + '"><a data-href="' + catFeature.feature.link + '"><img src="' + catFeature.feature.img +
+					'" usemap="' + catFeature.feature.useMap + '" /></a></div>';
 
-			module.elementIndex++;
+				//append to design board
+				$("#board").append(markup);
+				$('.catFeature').show('fast');
+
+				//apply draggable and moveable to new object
+				module.animate(catFeature, '.catFeature', 180);
+
+				//store reference
+				module.data.store(1, catFeature);
+
+				//save designboard after addition
+				module.undo.saveDesignBoard();
+
+				module.elementIndex++;
+
+			}
+			else {
+
+				alert("There's already a feature spot on the design board! Please delete it before adding another.");
+
+			}
 
 		},
 
@@ -131,12 +150,11 @@ define([
 			integratedContent.dataPosition = '0_0';
 			integratedContent.dataSize = '1_1';
 
-			integratedContent.markup = '<div id="integratedContentSpot" class="ICtemp catFeature intContent ' + 
-			integratedContent.gridDimensions + '" data-position="' + integratedContent.dataPosition + 
-			'" data-size="' + integratedContent.dataSize + '" data-index="' + module.elementIndex + '"></div>';
+			var markup = '<div id="integratedContentSpot" class="ICtemp catFeature intContent ' + integratedContent.gridDimensions + '" data-position="' + integratedContent.dataPosition +
+				'" data-size="' + integratedContent.dataSize + '" data-index="' + module.elementIndex + '"></div>';
 
 			//append to design board
-			$("#board").append(integratedContent.markup);
+			$("#board").append(markup);
 			$('.intContent').fadeIn('fast');
 
 			//apply draggable and moveable to new object
@@ -356,16 +374,46 @@ define([
 
 			store: function(type, designObj) {
 
+				var found = false,
+				where = 0;
+
 				//store feature
 				switch (type) {
 					case 1:
 
-						//track reference to design board objects
-						designObj.index = module.elementIndex;
+						//check if this feature object we are trying to add 
+						////already exists in data object
+						for(var i = 0; i < module.elementIndex; i++) {
 
-						//merge new feature object with running data object
-						module.dataObj.categories.push(designObj.categories);
+							if (module.dataObj.categories[i].fssc === designObj.fssc) {
 
+								where = i;
+								found = true;
+
+								break;
+							}
+						}
+
+						if(found) {
+
+							alert("Cannot override existing FSSC Code.");
+
+							return 0;
+
+						}
+
+						//if not, then create it
+						else {
+
+							//track reference to design board objects
+							designObj.index = module.elementIndex;			
+
+							//merge new feature object with running data object
+							module.dataObj.categories.push(designObj);
+
+							return 1;
+
+						}
 						break;
 
 					case 2:
@@ -386,69 +434,112 @@ define([
 				return module.dataObj.categories[dataIndex];
 
 			},
-			delete: function() {
+			delete: function(index) {
 
 				//delete given data
+
+				delete module.dataObj.categories[index];
 
 			},
 			export: function() {
 
-				//save config file to external file
+
 				$.ajax({
-					type: 'POST', // added,
-					url: localhost, //server
-					data: '{"data": "TEST"}',
-					//dataType: 'jsonp' - removed
-					//jsonpCallback: 'callback' - removed
-					success: function(data) {
-						var ret = jQuery.parseJSON(data);
-						$('#lblResponse').html(ret.msg);
+					type: 'POST',
+					dataType: 'json',
+					url: 'category',
+					data: module.dataObj,
+					beforeSend: function() {
+						//nothing
 					},
-					error: function(xhr, status, error) {
-						console.log('Error: ' + error.message);
-						$('#lblResponse').html('Error connecting to the server.');
+					success: function(msg) {
+						console.log('Response: ', msg);
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						console.log(xhr.status);
+						console.log(thrownError);
 					}
 				});
+
 
 			}
 		},
 
 		new: {
-			feature: function() {
-				{
-					var feature = {
-						categories: {
-							fssc: 'replaceMeWithARealFSSCCode',
-							countries: ['US'],
-							viewType: 1,
-							feature: {
-								gridDimensions: 'grid1x1',
-								dataPosition: '0_0',
-								dataSize: '1_1',
-								link: '',
-								img: '',
-								useMap: false,
-								useFeature: true,
-								integratedContent: false,
-								image_map: {
-									map: {
-										map_type: 'poly',
-										data_sku: null,
-										data_tag: null,
-										coords: '0'
-									},
-									mapSmall: {
-										map_type: 'poly',
-										data_sku: null,
-										data_tag: null,
-										coords: '0'
-									}
-								}
+			feature: function(config) {
+
+				//define presets
+				var feature = {
+					fssc: '',
+					countries: ['US'],
+					viewType: 1,
+					feature: {
+						gridDimensions: 'grid1x1',
+						dataPosition: '0_0',
+						dataSize: '1_1',
+						link: '',
+						img: '',
+						useMap: false,
+						useFeature: true,
+						integratedContent: false,
+						image_map: {
+							map: {
+								map_type: 'poly',
+								data_sku: null,
+								data_tag: null,
+								coords: '0'
+							},
+							mapSmall: {
+								map_type: 'poly',
+								data_sku: null,
+								data_tag: null,
+								coords: '0'
 							}
 						}
 					}
-					return feature;
-				}
+				};
+
+				//fill values sent with function call
+				if(config.fssc)
+					{feature.fssc = config.fssc;}
+
+				if(config.countries)
+					{feature.countries = config.countries;}
+
+				if(config.viewType)
+					{feature.viewType = config.viewType;}
+
+				if(config.feature)
+					{feature.feature = config.feature;}
+
+				if(config.gridDimensions)
+					{feature.feature.gridDimensions = config.feature.gridDimensions;}
+
+				if(config.dataPosition)
+					{feature.feature.dataPosition = config.feature.dataPosition;}
+
+				if(config.dataSize)
+					{feature.feature.dataSize = config.feature.dataSize;}
+
+				if(config.link)
+					{feature.feature.link = config.feature.link;}
+
+				if(config.img)
+					{feature.feature.img = config.feature.img;}
+
+				if(config.useMap)
+					{feature.feature.useMap = config.feature.useMap;}
+
+				if(config.useFeature)
+					{feature.feature.useFeature = config.feature.useFeature;}
+
+				if(config.integratedContent)
+					{feature.feature.integratedContent = config.feature.integratedContent;}
+
+				if(config.image_map)
+					{feature.feature.image_map = config.feature.image_map;}
+
+				return feature;
 			}
 		},
 
@@ -457,24 +548,20 @@ define([
 			//save current designboard configuration			
 			saveDesignBoard: function() {
 
-			
-
 				var properties = {};
 
-				
+				$('.catFeature').each(function(index) {
 
-					$('.catFeature').each(function(index) {
+					//get designboard data
+					properties.Fposition = $(this).position();
+					properties.Fwidth = $(this).width();
+					properties.Fheight = $(this).height();
+					properties.Findex = $(this).data('index');
 
-						//get designboard data
-						properties.Fposition = $(this).position();
-						properties.Fwidth = $(this).width();
-						properties.Fheight = $(this).height();
-						properties.Findex = $(this).data('index');
+					module.updateElementPosition(properties.Fposition, properties.Fwidth, properties.Fheight, properties.Findex);
 
-						module.updateElementPosition(properties.Fposition,properties.Fwidth,properties.Fheight, properties.Findex );
+				});
 
-					});
-				
 
 				// if ($('#integratedContentSpot')[0]) {
 
@@ -527,43 +614,43 @@ define([
 				case 'gridDimensions':
 
 					config.categories[index].feature.gridDimensions = value;
-					
+
 					break;
 
 				case 'dataPosition':
 
 					config.categories[index].feature.dataPosition = value;
-					
+
 					break;
 
 				case 'link':
 
 					config.categories[index].feature.link = value;
-					
+
 					break;
 
 				case 'img':
 
 					config.categories[index].feature.img = value;
-					
+
 					break;
 
 				case 'useMap':
 
 					config.categories[index].feature.useMap = value;
-					
+
 					break;
 
 				case 'useFeature':
 
 					config.categories[index].feature.useFeature = value;
-					
+
 					break;
 
 				case 'integratedContent':
 
 					config.categories[index].feature.integratedContent = value;
-					
+
 					break;
 					//need to add image maps as well
 
@@ -579,9 +666,13 @@ define([
 			push: function(message) {
 
 				//push UI help messages to the DOM
-				$('.helpBox').animate({'opacity': 0}, 200, function () {
-				    $(this).html(message);
-				}).animate({'opacity': .2}, 200);
+				$('.helpBox').animate({
+					'opacity': 0
+				}, 200, function() {
+					$(this).html(message);
+				}).animate({
+					'opacity': .5
+				}, 200);
 
 			}
 
@@ -599,9 +690,31 @@ define([
 			// var yposition = offsetTop/180,
 			// xposition = offsetLeft/180;
 
-			
+
 			// $('#yposition').text(yposition);
 			// $('#xposition').text(xposition);
+
+		},
+
+		returnDemensions: function(value, type) {
+
+			//
+			switch (type) {
+				case 'width':
+
+					//
+					// var width = (value.split('_', 1) * 180) + 'px';
+					// console.log(width);
+					// return width;
+
+				case 'height':
+
+					//
+					// var height = (value.split(/[_]+/).pop() * 180) + 'px';
+					// console.log(height);
+					// return height;
+
+			}
 
 		},
 
@@ -615,12 +728,19 @@ define([
 			$('#render').click(function() {
 				$('#fsscSearch').css('background', '#C7EDD1');
 				module.switchFSSC();
+
+				//clear top message now that user has interacted with the fssc finder
+				module.helpMessage.push(' ');
+
 			});
 			$('#fsscSearch').keypress(function(e) {
 
 				if (e.keyCode == 13) {
 					$('#fsscSearch').css('background', '#C7EDD1');
 					module.switchFSSC();
+
+					//clear top message now that user has interacted with the fssc finder
+					module.helpMessage.push(' ');
 				}
 
 			});
@@ -635,25 +755,12 @@ define([
 				module.createIntegratedContent();
 			});
 
-			$('#createIC').mouseover(function() {
-				module.helpMessage.push('create a blank <b>brand spot<b> and place it on the design board.');
-			});
-
 			$('#createFeature').click(function() {
 				module.createFeature();
 			});
 
-			$('#createFeature').mouseover(function() {
-				var message = 'create a blank <b>feature<b> and place it on the design board.';
-				module.helpMessage.push(message);
-			});
-
 			$('#deleteElement').click(function() {
 				module.designBoard.deleteElement();
-			});
-
-			$('#deleteElement').mouseover(function() {
-				module.helpMessage.push('delete selected element');
 			});
 
 			$('#modalFSSCButton').click(function(e) {
@@ -674,10 +781,6 @@ define([
 
 			});
 
-			$('#modalFSSCButton').mouseover(function() {
-				module.helpMessage.push('add to or edit the fssc value list');
-			});
-
 			$('#modalConfigButton').click(function(e) {
 
 				var list, i;
@@ -696,14 +799,15 @@ define([
 
 			});
 
-			$('#modalConfigButton').mouseover(function() {
-				module.helpMessage.push('bring up the config settings for selected element');
-			});
-
 			//toggle yes or no for creating new FSSC code
 			$('#createFSSC').click(function() {
 
-				$('#fsscConfirmation').toggle('fast');
+				if( $('#fsscAdd').val() ) {
+
+					//dont toggle unless there is input to parse
+					$('#fsscConfirmation').toggle('fast');
+
+				}
 
 			});
 
@@ -712,15 +816,43 @@ define([
 
 				var newFSSC = $('#fsscAdd').val();
 
-				module.fsscList.push(newFSSC);
+				//dont toggle unless there is input to parse
+				if( $('#fsscAdd').val() ) {
 
-				module.populateModalFSSCList();
+					//create new feature object with data we received
+					var config = {};
+					config.fssc = newFSSC;
+					var catFeature = module.new.feature(config);				
 
-				$('#fsscAdd').val('');
+					//save the object to data stack
+					var duplicate = module.data.store(1, catFeature);
 
-				$('#fsscConfirmation').toggle('fast');
+					if(duplicate) {
 
-				module.loadSearchBar();
+						//add fssc to running fssc list
+						module.fsscList.push(newFSSC);
+
+						//populate UI with the new information
+						$('#fsscAdd').val('');
+						$('#fsscConfirmation').toggle('fast');
+
+						module.populateModalFSSCList();
+						module.loadSearchBar();
+
+						//increment running element counter 
+						module.elementIndex++;
+
+					}
+					else {
+
+						//reset
+						$('#fsscAdd').val('');
+						$('#fsscConfirmation').toggle('fast');
+
+					}
+
+					
+				}
 
 			});
 
@@ -764,6 +896,20 @@ define([
 
 			});
 
+			//country button functionality
+			$('.badge').click(function() {
+
+				//
+				if ($(this).hasClass('badge-success')) {
+					$(this).removeClass('badge-success').addClass('badge-inverse');
+					enabled = false;
+				} else {
+					$(this).removeClass('badge-inverse').addClass('badge-success');
+					enabled = true;
+				}
+
+			});
+
 			$('#export').click(function() {
 
 				//export user's new config file to server for file writing
@@ -774,14 +920,14 @@ define([
 			$('#saveCatConf').click(function() {
 
 				//save new values from user modal
-				module.updateConfig( module.currentElementIndex, 'fssc', $('#cat_fssc').val() );
-				module.updateConfig( module.currentElementIndex, 'link', $('#cat_link').val() );
-				module.updateConfig( module.currentElementIndex, 'img', $('#cat_img').val() );
+				module.updateConfig(module.currentElementIndex, 'fssc', $('#cat_fssc').val());
+				module.updateConfig(module.currentElementIndex, 'link', $('#cat_link').val());
+				module.updateConfig(module.currentElementIndex, 'img', $('#cat_img').val());
 
 				$('#configUpdate').toggle('slow');
 
 				//fix this later
-				var hideMessage =  $('#configUpdate').toggle('slow');
+				var hideMessage = $('#configUpdate').toggle('slow');
 
 				window.setTimeout(hideMessage, 4000);
 
@@ -793,13 +939,20 @@ define([
 			$(document).ready(function() {
 
 				//push welcome message when designboard loads
-				function welcomeMessage() { 
-					module.helpMessage.push('Hover over any tool for help. :)');
+
+				function welcomeMessage() {
+					module.helpMessage.push('Select a Category FSSC to get started.');
 				}
 
-				setTimeout(welcomeMessage,1000);
+				setTimeout(welcomeMessage, 1000);
 
-				// $('#categoryAttributes label').animate({'margin': '14px 0'});
+				//init date picker calendars in toolbar
+				$('#dp1').datepicker({
+					format: 'mm-dd-yyyy'
+				});
+				$('#dp2').datepicker({
+					format: 'mm-dd-yyyy'
+				});
 
 			});
 
