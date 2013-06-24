@@ -1,59 +1,70 @@
 //JADE//CATEGORY//DESIGNBOARD//
 
-button.btn.btn-success#enabled Enabled
-#contries
-	span.badge.badge-success.us US
-	span.badge.badge-inverse.de DE
-	span.badge.badge-inverse.uk UK
-	span.badge.badge-inverse.gl GL
-	span.badge.badge-inverse.fr FR
-	span.badge.badge-inverse.it IT
-	span.badge.badge-inverse.au AU
-	span.badge.badge-inverse.za ZA
-	span.badge.badge-inverse.nl NL
-	span.badge.badge-inverse.cn CN
-	span.badge.badge-inverse.jp JP
-	span.badge.badge-inverse.kr KR
-label
-	b Go-Live
-input#dp1(type='text')
-label
-	b Take-Down
-input#dp2(type='text')
+#leftPane
+	button.btn.btn-success#enabled Enabled
+	span.badge.badge-success.catSelector SUBCAT
 
-label
-	b Actions
-button.btn#clearBoard
-	i.icon-trash
-button.btn#undo
-	i.icon-undo
+	#contries
+		span.badge.badge-success.us US
+		span.badge.badge-inverse.de DE
+		span.badge.badge-inverse.uk UK
+		span.badge.badge-inverse.gl GL
+		span.badge.badge-inverse.fr FR
+		span.badge.badge-inverse.it IT
+		span.badge.badge-inverse.au AU
+		span.badge.badge-inverse.za ZA
+		span.badge.badge-inverse.nl NL
+		span.badge.badge-inverse.cn CN
+		span.badge.badge-inverse.jp JP
+		span.badge.badge-inverse.kr KR
+	label
+		b Go-Live
+			i.icon-calendar.goLive
+	input#dp1(type='text')
+	label
+		b Take-Down
+			i.icon-calendar.goLive
+	input#dp2(type='text')
 
-label
-	b Features
-button.btn#createFeature
-	i.icon-plus
-button.btn#modalConfigButton(disabled)
-	i.icon-wrench
+	label
+		b Actions
+	button.btn#clearBoard
+		i.icon-trash
+	button.btn#undo
+		i.icon-undo
 
-label
-	b Brand Spots
-button.btn#createIC
-	i.icon-plus
+	label
+		b Features
+	button.btn#createFeature
+		i.icon-plus
+	button.btn#modalConfigButton(disabled)
+		i.icon-wrench
 
-label
-	b Delete
-button.btn#deleteElement(disabled)
-	i.icon-minus
+	label
+		b Brand Spots
+	button.btn#createIC
+		i.icon-plus
 
-label
-	b Image Map
-button.btn(disabled)
-	i.icon-plus
+	label
+		b Delete
+	button.btn#deleteElement(disabled)
+		i.icon-minus
 
-label
-	b Position
+	label
+		b Image Map
+	button.btn(disabled)
+		i.icon-plus
 
-label.position
-	span.number#yposition 0
-	span.number#divider :
-	span.number#xposition 0
+	//label
+		b Position
+
+	//label.position
+		span.number#yposition 0
+		span.number#divider :
+		span.number#xposition 0
+
+#rightPane
+	button.classC.viewAll.categorySwitch.selected
+		i.icon-align-justify
+	button.classC.subcat.categorySwitch
+		i.icon-indent-right
