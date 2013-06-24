@@ -72,12 +72,11 @@ define([
 			// var buffer = Hogan.compile(module.template).render({
 			// categories: module.config.categories[i]
 			// });
-	
+
 			var catFeature = module.config.categories[i];
 
 			var markup = '<div id="categoryFeatureSpot" class="catFeature ' + catFeature.feature.gridDimensions + ' ' + catFeature.fssc + '" data-position="' + catFeature.feature.dataPosition +
-				'" width="' + module.returnDemensions(catFeature.feature.dataSize, 'width') + '" height="' + module.returnDemensions(catFeature.feature.dataSize, 'height') + '" data-index="' + i 
-				+ '"><a data-href="' + catFeature.feature.link + '"><img src="' + catFeature.feature.img + '" usemap="' + catFeature.feature.useMap + '" /></a></div>';
+				'" width="' + module.returnDemensions(catFeature.feature.dataSize, 'width') + '" height="' + module.returnDemensions(catFeature.feature.dataSize, 'height') + '" data-index="' + i + '"><a data-href="' + catFeature.feature.link + '"><img src="' + catFeature.feature.img + '" usemap="' + catFeature.feature.useMap + '" /></a></div>';
 
 			//append to design board
 			$("#board").append(markup);
@@ -95,7 +94,7 @@ define([
 
 			//check if there's already a feature spot on the designboard
 			//config file only supports one feature
-			if(!$('#categoryFeatureSpot')[0]) {
+			if (!$('#categoryFeatureSpot')[0]) {
 
 				//create default attributes for new feature
 
@@ -125,8 +124,7 @@ define([
 
 				module.elementIndex++;
 
-			}
-			else {
+			} else {
 
 				alert("There's already a feature spot on the design board! Please delete it before adding another.");
 
@@ -191,10 +189,7 @@ define([
 		//quick method to rewrite image paths to make them viewable from browser
 		fixLocalPath: function(domain, img) {
 
-			var imagePath = domain + img;
-
-			//prepend fossil domain to path
-			$('#board img').attr('src', imagePath);
+			return (domain + img);
 
 		},
 
@@ -212,6 +207,8 @@ define([
 
 			//render feature
 			module.renderCatFeature(index);
+
+			//set global fssc attributes for other methods to have easy access to
 
 			//fix image paths since we're not in the fossil asset scope
 			// this will be done to the config reference since we don't want to corrupt config values
@@ -375,7 +372,7 @@ define([
 			store: function(type, designObj) {
 
 				var found = false,
-				where = 0;
+					where = 0;
 
 				//store feature
 				switch (type) {
@@ -383,7 +380,7 @@ define([
 
 						//check if this feature object we are trying to add 
 						////already exists in data object
-						for(var i = 0; i < module.elementIndex; i++) {
+						for (var i = 0; i < module.elementIndex; i++) {
 
 							if (module.dataObj.categories[i].fssc === designObj.fssc) {
 
@@ -394,7 +391,7 @@ define([
 							}
 						}
 
-						if(found) {
+						if (found) {
 
 							alert("Cannot override existing FSSC Code.");
 
@@ -406,7 +403,7 @@ define([
 						else {
 
 							//track reference to design board objects
-							designObj.index = module.elementIndex;			
+							designObj.index = module.elementIndex;
 
 							//merge new feature object with running data object
 							module.dataObj.categories.push(designObj);
@@ -461,6 +458,8 @@ define([
 					}
 				});
 
+				module.helpMessage.push('<span class="saveNotice">Saved.</span>');
+
 
 			}
 		},
@@ -470,15 +469,15 @@ define([
 
 				//define presets
 				var feature = {
-					fssc: '',
+					fssc: 'placeholder',
 					countries: ['US'],
 					viewType: 1,
 					feature: {
 						gridDimensions: 'grid1x1',
 						dataPosition: '0_0',
 						dataSize: '1_1',
-						link: '',
-						img: '',
+						link: 'placeholder',
+						img: 'placeholder',
 						useMap: false,
 						useFeature: true,
 						integratedContent: false,
@@ -500,44 +499,57 @@ define([
 				};
 
 				//fill values sent with function call
-				if(config.fssc)
-					{feature.fssc = config.fssc;}
+				if (config.fssc) {
+					feature.fssc = config.fssc;
+				}
 
-				if(config.countries)
-					{feature.countries = config.countries;}
+				if (config.countries) {
+					feature.countries = config.countries;
+				}
 
-				if(config.viewType)
-					{feature.viewType = config.viewType;}
+				if (config.viewType) {
+					feature.viewType = config.viewType;
+				}
 
-				if(config.feature)
-					{feature.feature = config.feature;}
+				if (config.feature) {
+					feature.feature = config.feature;
+				}
 
-				if(config.gridDimensions)
-					{feature.feature.gridDimensions = config.feature.gridDimensions;}
+				if (config.gridDimensions) {
+					feature.feature.gridDimensions = config.feature.gridDimensions;
+				}
 
-				if(config.dataPosition)
-					{feature.feature.dataPosition = config.feature.dataPosition;}
+				if (config.dataPosition) {
+					feature.feature.dataPosition = config.feature.dataPosition;
+				}
 
-				if(config.dataSize)
-					{feature.feature.dataSize = config.feature.dataSize;}
+				if (config.dataSize) {
+					feature.feature.dataSize = config.feature.dataSize;
+				}
 
-				if(config.link)
-					{feature.feature.link = config.feature.link;}
+				if (config.link) {
+					feature.feature.link = config.feature.link;
+				}
 
-				if(config.img)
-					{feature.feature.img = config.feature.img;}
+				if (config.img) {
+					feature.feature.img = config.feature.img;
+				}
 
-				if(config.useMap)
-					{feature.feature.useMap = config.feature.useMap;}
+				if (config.useMap) {
+					feature.feature.useMap = config.feature.useMap;
+				}
 
-				if(config.useFeature)
-					{feature.feature.useFeature = config.feature.useFeature;}
+				if (config.useFeature) {
+					feature.feature.useFeature = config.feature.useFeature;
+				}
 
-				if(config.integratedContent)
-					{feature.feature.integratedContent = config.feature.integratedContent;}
+				if (config.integratedContent) {
+					feature.feature.integratedContent = config.feature.integratedContent;
+				}
 
-				if(config.image_map)
-					{feature.feature.image_map = config.feature.image_map;}
+				if (config.image_map) {
+					feature.feature.image_map = config.feature.image_map;
+				}
 
 				return feature;
 			}
@@ -601,7 +613,9 @@ define([
 
 				case 'countries':
 
-					config.categories[index].countries = value;
+					var countryList = config.categories[index].countries + ' ' + value;
+					config.categories[index].countries = '';
+					config.categories[index].countries = config.categories[index].countries + ' ' + value;
 
 					break;
 
@@ -656,6 +670,31 @@ define([
 
 				default:
 					console.log('Problem: could not find data pair type. Did you send me a valid config type?');
+			}
+
+		},
+
+		addCountry: function(newCountry) {
+
+			var currentCountries = config.categories[index].countries,
+			exists = false;
+
+			for( var i = 0; i < currentCountries.length; i++ ) {
+
+				if(currentCountries[i] === newCountry) {
+
+					exists = true;
+					break;
+
+				}
+			}
+console.log('never made it here');
+			if (!exists) {
+
+				currentCountries.push(newCountry);
+				console.log('adding country: ', currentCountries);
+				module.updateConfig(module.currentElementIndex, 'country', currentCountries);
+
 			}
 
 		},
@@ -802,7 +841,7 @@ define([
 			//toggle yes or no for creating new FSSC code
 			$('#createFSSC').click(function() {
 
-				if( $('#fsscAdd').val() ) {
+				if ($('#fsscAdd').val()) {
 
 					//dont toggle unless there is input to parse
 					$('#fsscConfirmation').toggle('fast');
@@ -817,17 +856,17 @@ define([
 				var newFSSC = $('#fsscAdd').val();
 
 				//dont toggle unless there is input to parse
-				if( $('#fsscAdd').val() ) {
+				if ($('#fsscAdd').val()) {
 
 					//create new feature object with data we received
 					var config = {};
 					config.fssc = newFSSC;
-					var catFeature = module.new.feature(config);				
+					var catFeature = module.new.feature(config);
 
 					//save the object to data stack
 					var duplicate = module.data.store(1, catFeature);
 
-					if(duplicate) {
+					if (duplicate) {
 
 						//add fssc to running fssc list
 						module.fsscList.push(newFSSC);
@@ -842,8 +881,7 @@ define([
 						//increment running element counter 
 						module.elementIndex++;
 
-					}
-					else {
+					} else {
 
 						//reset
 						$('#fsscAdd').val('');
@@ -851,7 +889,7 @@ define([
 
 					}
 
-					
+
 				}
 
 			});
@@ -896,20 +934,6 @@ define([
 
 			});
 
-			//country button functionality
-			$('.badge').click(function() {
-
-				//
-				if ($(this).hasClass('badge-success')) {
-					$(this).removeClass('badge-success').addClass('badge-inverse');
-					enabled = false;
-				} else {
-					$(this).removeClass('badge-inverse').addClass('badge-success');
-					enabled = true;
-				}
-
-			});
-
 			$('#export').click(function() {
 
 				//export user's new config file to server for file writing
@@ -919,10 +943,19 @@ define([
 
 			$('#saveCatConf').click(function() {
 
+				var newImage = $('#cat_img').val();
+
 				//save new values from user modal
 				module.updateConfig(module.currentElementIndex, 'fssc', $('#cat_fssc').val());
 				module.updateConfig(module.currentElementIndex, 'link', $('#cat_link').val());
 				module.updateConfig(module.currentElementIndex, 'img', $('#cat_img').val());
+
+				//check if they added an image reference to fossil
+				if (newImage.charAt(0) === '/') {
+					newImage = module.fixLocalPath('http://www.fossil.com', newImage)
+				}
+
+				module.currentElement.find('img').attr("src", newImage)
 
 				$('#configUpdate').toggle('slow');
 
@@ -936,12 +969,107 @@ define([
 
 			});
 
+			//country button functionality
+			$('.badge').click(function() {
+
+				if ($(this).hasClass('badge-success')) {
+					$(this).removeClass('badge-success').addClass('badge-inverse');
+					enabled = false;
+				} else {
+					$(this).removeClass('badge-inverse').addClass('badge-success');
+					enabled = true;
+				}
+
+				countryClicked = $(this).attr('class').split(' ');
+				console.log(countryClicked);
+
+				switch (countryClicked) {
+					case 'us':
+						module.addCountry(countryClicked);
+						break;
+
+					case 'de':
+						module.addCountry(countryClicked);
+						break;
+
+					case 'uk':
+						module.addCountry(countryClicked);
+						break;
+
+					case 'gl':
+						module.addCountry(countryClicked);
+						break;
+
+					case 'fr':
+						module.addCountry(countryClicked);
+						break;
+
+					case 'it':
+						module.addCountry(countryClicked);
+						break;
+
+					case 'au':
+						module.addCountry(countryClicked);
+						break;
+
+					case 'za':
+						module.addCountry(countryClicked);
+						break;
+
+					case 'nl':
+						module.addCountry(countryClicked);
+						break;
+
+					case 'cn':
+						module.addCountry(countryClicked);
+
+						break;
+
+					case 'jp':
+						module.addCountry(countryClicked);
+						break;
+
+					case 'kr':
+						module.addCountry(countryClicked);
+						break;
+					}
+				});
+
+			$('.viewAll').click(function() {
+
+				//subcat
+				$('.catSelector').html('VIEWALL');
+
+				if(!($(this).hasClass('selected'))) {
+
+					$(this).addClass('selected');
+					
+				}
+				$('.subcat').removeClass('selected');
+
+			});
+
+			$('.subcat').click(function() {
+
+				//subcat
+				$('.catSelector').html('SUBCAT');
+
+				if(!($(this).hasClass('selected'))) {
+
+					$(this).addClass('selected');
+
+				}
+
+				$('.viewAll').removeClass('selected');
+				
+			});
+
 			$(document).ready(function() {
 
 				//push welcome message when designboard loads
 
 				function welcomeMessage() {
-					module.helpMessage.push('Select a Category FSSC to get started.');
+					module.helpMessage.push('select a category FSSC from the big search to get started');
 				}
 
 				setTimeout(welcomeMessage, 1000);
@@ -958,8 +1086,8 @@ define([
 
 			//ADD MORE HERE
 
-		}
+			}
 
-	};
-	return module;
-});
+		};
+		return module;
+	});
