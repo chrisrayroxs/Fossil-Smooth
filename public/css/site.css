@@ -166,16 +166,29 @@ ul.nav li.dropdown:hover > ul.dropdown-menu { display: block }
 .catFeature img { width: 100% }
 #categoryFeatureSpot img { width: 100% }
 #categoryAttributes {
+    width: 154px;
+    min-height: 600px;
+    position: relative;
+    float: left;
+    text-align: center;
+    margin:0;
+}
+#leftPane {
     width: 91px;
     min-height: 600px;
     position: relative;
     float: left;
     padding-left: 0;
-    background: #f3f3f3;
+    background: #333333;
     margin-left: 0;
     border: 1px solid #ccc;
     padding: 10px;
-    text-align: center;
+}
+#rightPane {
+    width: 40px;
+    position: relative;
+    float: left;
+    margin-left: 0;
 }
 .ui-widget label {
     margin: 0;
@@ -342,7 +355,9 @@ span.greenNotice { color: green }
     height: 47px;
 } 
 .classC {
-    
+  width: 57px;
+  float: left;
+  height: 140px;
 }
 .fsscList {
   height:500px;
@@ -350,13 +365,22 @@ span.greenNotice { color: green }
   width: 103%;
   overflow-y: scroll;
 }
+
+.catSelector {
+  font-size: 9px!important;
+  margin:10px;
+  background-color:#4687FE!important;
+}
 .fsscList li {
     list-style: none;
     padding: 3px;
     color: #3F6B8A;
     border-bottom: 1px solid #ccc;
 }
- 
+.goLive {
+  color:#fff;
+}
+
 .fsscList {
   list-style-type: none;
   margin: 0;
@@ -447,6 +471,52 @@ font-size: 20px;
   color: #000;
   text-align: center;
 }
+.saveNotice {
+  color:#89CFF5;
+  font-size: 2em;
+}
+.categorySwitch {
+  position: relative;
+  color: rgba(255,255,255,1);
+  text-decoration: none;
+  background-color: #333333;
+  font-family: 'Yanone Kaffeesatz';
+  font-weight: 24px;
+  font-size: 36px;
+  display: block;
+  word-wrap: break-word;
+  padding: 4px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  -webkit-box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+  -moz-box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+  box-shadow: 0px 9px 0px #333, 0px 9px 25px rgba(0,0,0,.7);
+  margin: 100px auto;
+  width: 64px;
+  text-align: center;
+  margin: 2px 0 10px 0;
+  
+  -webkit-transition: all .1s ease;
+  -moz-transition: all .1s ease;
+  -ms-transition: all .1s ease;
+  -o-transition: all .1s ease;
+  transition: all .1s ease;
+}
+.categorySwitch:active {
+    -webkit-box-shadow: 0px 3px 0px #000, 0px 3px 6px rgba(0,0,0,.9);
+    -moz-box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+    box-shadow: 0px 3px 0px #000, 0px 3px 6px rgba(0,0,0,.9);
+    position: relative;
+    top: 6px;
+}
+.selected {
+color:#000;
+  background-color: #B3B3B3!important;  
+}
+.goLive {
+  margin-left: 5px;
+}
 
 /* threshold 1 category grid styles             */
 .grid1x1 {
@@ -530,6 +600,28 @@ label.position {
 #xposition {
 
 }
-
+/* Let's get this party started */
+::-webkit-scrollbar {
+    width: 14px;
+    cursor: pointer;
+}
+ 
+/* Track */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px #999; 
+    -webkit-border-radius: 1px;
+    border-radius: 4px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 4px;
+    background: #111; 
+    -webkit-box-shadow: inset 0 0 6px #555; 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+  background: #333; 
+}
 
 
