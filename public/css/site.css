@@ -112,8 +112,8 @@ ul.nav li.dropdown:hover > ul.dropdown-menu { display: block }
     position: relative;
     float: left;
     clear: both;
-    width: 1415px;
-    background: #ddd;
+    width: 1422px;
+    background: none;
 }
 #design {
     width: 1095px;
@@ -139,7 +139,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu { display: block }
 #fsscSearch {
     height: 40px;
     font-size: 24px;
-    width: 1231px;
+    width: 1215px;
     padding: 0.15% .25% 0 .45%;
     float: left;
 }
@@ -182,6 +182,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu { display: block }
     background: #333333;
     margin-left: 0;
     border: 1px solid #ccc;
+    border-radius: 6px;
     padding: 10px;
 }
 #rightPane {
@@ -232,23 +233,7 @@ span.greenNotice { color: green }
     border-bottom: 1px solid #e5e5e5;
     margin: 10px 0;
 }
-#modalFSSC {
-    width: 660px;
-    height: 700px;
-    padding: 8px;
-    background: rgba(0,0,0,.3);
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    border-radius: 8px;
-    position: absolute !important;
-    top: 20% !important;
-    left: 40% !important;
-    margin-top: -94px !important;
-    margin-left: -180px !important;
-    z-index: 101;
-    display: none;
-}
-#modalConfig {
+.modalBox {
     width: 660px;
     height: 700px;
     padding: 8px;
@@ -468,13 +453,131 @@ font-size: 20px;
   padding: 6px 10px;
   border-radius: 6px;
   width: 30%;
-  color: #000;
+  color: #fff;
   text-align: center;
 }
 .saveNotice {
   color:#89CFF5;
   font-size: 2em;
 }
+.home, .logout {
+  color:#999;
+}
+.home:hover, .logout:hover {
+  color:#FFF;
+}
+#modalAddMap {
+  width: 800px!important;
+  height: 800px!important;
+  margin-left: -240px !important;
+}
+#modalAddMap #content {
+  width: 760px!important;
+  height: 715px!important;
+}
+#modalAddMap #heading {
+  width: 800px;
+}
+#previewCanvas {
+  float:left;
+  width: 62%;
+  height: 100%;
+  border: solid 1px #ccc;
+}
+#previewCanvas canvas {
+  width: 100%;
+  height: 100%;
+}
+
+#mapTools {
+  float:left;
+  width: 8%;
+  height: 100%;
+  border: solid 1px #ccc;
+}
+#productSelector {
+  float:left;
+  width: 28%;
+  height: 100%;
+  border: solid 1px #ccc;
+  background: #333;
+  color: #fff;
+}
+#productSelector ul {
+  margin:0;
+}
+#productSelector li {
+  list-style: none;
+  padding: 6px;
+  border-bottom: solid 1px #444;
+  margin: 0;
+}
+#productSelector li:hover {
+  background:#777;
+  color:#999;
+  -webkit-transition: all .1s ease;
+  -moz-transition: all .1s ease;
+  -ms-transition: all .1s ease;
+  -o-transition: all .1s ease;
+  transition: all .1s ease;
+}
+#saveMap {
+  width: 61px;
+  float: left;
+  height: 54px;
+  font-weight: bold;
+}
+.mapTool {
+  width: 35px;
+  height: 33px;
+  background-image: url(../imgs/map_tools_sprite.png);
+  background-repeat: no-repeat;
+  display: inline-block;
+  margin: 8px 13px;
+  cursor: pointer;
+}
+#navbar {
+  min-height: 40px;
+  padding-right: 20px;
+  padding-left: 20px;
+  background-color: #333333;
+  border-width: 0 0 1px;
+  color:#ffffff;
+}
+.row {
+  background: url(../imgs/ricepaper.png) repeat;
+}
+#mapPoly {
+  background-position: 0 0px;
+}
+#mapRect {
+  background-position: -39px 0;
+}
+#mapDelete {
+  background-position: -161px 0;
+}
+#mapPoly:hover {
+  background-position: 0 -33px;
+}
+#mapRect:hover {
+  background-position: -39px -33px;
+}
+#mapDelete:hover {
+  background-position: -161px -33px;
+}
+#mapPoly.selected {
+  background-position: 0 -33px;
+}
+#mapRect.selected {
+  background-position: -39px -33px;
+}
+#mapDelete.selected {
+  background-position: -161px -33px;
+}
+
+
+
+
 .categorySwitch {
   position: relative;
   color: rgba(255,255,255,1);
@@ -486,12 +589,12 @@ font-size: 20px;
   display: block;
   word-wrap: break-word;
   padding: 4px;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
-  -webkit-box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
-  -moz-box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
-  box-shadow: 0px 9px 0px #333, 0px 9px 25px rgba(0,0,0,.7);
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 1px 2px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+  -moz-box-shadow: 1px 3px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+  box-shadow: 1px 3px 0px #333, 0px 9px 25px rgba(0,0,0,.7);
   margin: 100px auto;
   width: 64px;
   text-align: center;
@@ -509,6 +612,9 @@ font-size: 20px;
     box-shadow: 0px 3px 0px #000, 0px 3px 6px rgba(0,0,0,.9);
     position: relative;
     top: 6px;
+}
+.selected {
+  box-shadow: 1px 3px 0px #333, 0px 9px 25px rgba(0,0,0,.7);
 }
 .selected {
 color:#000;
@@ -594,12 +700,7 @@ label.position {
   font-weight: bold;
   color:#999;
 }
-#yposition {
 
-}
-#xposition {
-
-}
 /* Let's get this party started */
 ::-webkit-scrollbar {
     width: 14px;
