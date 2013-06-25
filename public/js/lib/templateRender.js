@@ -329,9 +329,9 @@ define([
 				module.currentElement = 0;
 
 				//diable delete tool now that no element is selected
-				$('#deleteElement').prop("disabled", true);
+				$('#deleteElement, #modalConfigButton, #addMapButton').prop("disabled", true);
 
-				$('#modalConfigButton').prop("disabled", true);
+				$('').prop("disabled", true);
 
 			},
 			selectElement: function(element) {
@@ -345,7 +345,7 @@ define([
 				console.info(module.currentElement);
 
 				//enable delete tool now that an element is selected
-				$('#deleteElement, #modalConfigButton').prop("disabled", false);
+				$('#deleteElement, #modalConfigButton, #addMapButton').prop("disabled", false);
 
 			},
 			deleteElement: function() {
@@ -353,7 +353,7 @@ define([
 				module.currentElement.remove();
 
 				//diable delete tool now that no element is selected
-				$('#deleteElement').prop("disabled", true);
+				$('#deleteElement, #modalConfigButton, #addMapButton').prop("disabled", true);
 
 			},
 			loadAttributes: function() {
@@ -838,6 +838,24 @@ console.log('never made it here');
 
 			});
 
+			$('#addMapButton').click(function(e) {
+
+				var list, i;
+
+				$('#modalAddMap').show();
+				$('#modalAddMap').reveal({
+					animation: 'fade',
+					animationspeed: 300,
+					closeonbackgroundclick: true,
+					dismissmodalclass: 'close'
+				});
+
+				module.populateModalFSSCList();
+
+				return false;
+
+			});
+
 			//toggle yes or no for creating new FSSC code
 			$('#createFSSC').click(function() {
 
@@ -1043,7 +1061,7 @@ console.log('never made it here');
 				if(!($(this).hasClass('selected'))) {
 
 					$(this).addClass('selected');
-					
+
 				}
 				$('.subcat').removeClass('selected');
 
@@ -1063,6 +1081,41 @@ console.log('never made it here');
 				$('.viewAll').removeClass('selected');
 				
 			});
+			
+			$('#mapPoly').click(function() {
+
+				//
+				if(!($(this).hasClass('selected'))) {
+
+					$(this).addClass('selected');
+
+				}
+				$('#mapRect, #mapDelete').removeClass('selected');
+
+			});
+			$('#mapRect').click(function() {
+
+				//
+				if(!($(this).hasClass('selected'))) {
+
+					$(this).addClass('selected');
+
+				}
+				$('#mapPoly, #mapDelete').removeClass('selected');
+				
+			});
+			$('#mapDelete').click(function() {
+
+				//
+				if(!($(this).hasClass('selected'))) {
+
+					$(this).addClass('selected');
+
+				}
+				$('#mapRect, #mapPoly').removeClass('selected');
+				
+			});
+
 
 			$(document).ready(function() {
 
